@@ -57,6 +57,10 @@ class SettingsViewController: UIViewController {
     }
     
     
+}
+
+// MARK: - Private Methods
+extension SettingsViewController {
     
     private func setLoadSlider() {
         guard let redValues = uiColor.cgColor.components?[0] else {return}
@@ -66,8 +70,6 @@ class SettingsViewController: UIViewController {
         redSlider.setValue(Float(redValues), animated: true)
         greenSlider.setValue(Float(greenValue), animated: true)
         blueSlider.setValue(Float(blueValue), animated: true)
-        
-        
         
         redSlider.minimumTrackTintColor = .red
         greenSlider.minimumTrackTintColor = .green
@@ -85,8 +87,6 @@ class SettingsViewController: UIViewController {
         blueTextField.text = string(from: blueSlider)
     }
         
-    
-    
     private func setColorView() {
         let redSliderValue = CGFloat(redSlider.value)
         let greenSliderValue = CGFloat(greenSlider.value)
@@ -100,6 +100,7 @@ class SettingsViewController: UIViewController {
     }
 }
 
+// MARK: - TextField
 extension SettingsViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -108,28 +109,66 @@ extension SettingsViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let newValue = textField.text else { return  print("return1")}
-        guard let numberValue = Float(newValue) else { return print("return2")}
+        guard let newValue = textField.text else { return }
+        guard let numberValue = Float(newValue) else {
+            
+            switch textField {
+            case redTextField:
+                textField.text = redCountLabel.text
+            case greenTextField:
+                textField.text = greenCountLabel.text
+            default:
+                textField.text = blueCountLabel.text
+            }
+            
+            showAlert(title: "Не корректное значение", message: "Диаппазон значений от 0 до 1", textField: textField)
+            
+            return
+           
+        }
+        
+        switch numberValue {
+        case ...0:
+            showAlert(title: "Не корректное значение", message: "Минимальное значение 0", textField: textField)
+            textField.text = "0"
+        case 0 ... 1:
+            break
+        default:
+            showAlert(title: "Не корректное значение", message: "Максимальное значение 1", textField: textField)
+            textField.text = "1"
+        }
         
         switch textField {
         case redTextField:
             redSlider.setValue(numberValue, animated: true)
             redCountLabel.text = string(from: redSlider)
-            print("redTextField")
         case greenTextField:
             greenSlider.setValue(numberValue, animated: true)
             greenCountLabel.text = string(from: greenSlider)
-            print("greenTextField")
         default:
             blueSlider.setValue(numberValue, animated: true)
             blueCountLabel.text = string(from: blueSlider)
         }
         setColorView()
+        
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
+    }
+}
+
+// MARK: - Alert Controller
+extension SettingsViewController {
+    private func showAlert(title: String, message: String, textField: UITextField? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+           
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
 
