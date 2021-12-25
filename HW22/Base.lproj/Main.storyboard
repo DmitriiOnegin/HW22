@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Color View Controller-->
         <scene sceneID="I7y-7t-0C4">
             <objects>
-                <viewController id="qTp-Cf-YAe" sceneMemberID="viewController">
+                <viewController id="qTp-Cf-YAe" customClass="ColorViewController" customModule="HW22" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="twi-iD-2xr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,10 +30,10 @@
             </objects>
             <point key="canvasLocation" x="133.33333333333334" y="70.982142857142847"/>
         </scene>
-        <!--View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HW22" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SettingsViewController" customModule="HW22" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -159,6 +159,9 @@
                                 <state key="normal" title="Done">
                                     <color key="titleColor" systemColor="secondarySystemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="DoneButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="C4R-gJ-cfJ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -175,6 +178,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="BlueTextField" destination="T4A-M2-Cbj" id="U0h-Zu-dXh"/>
+                        <outlet property="GreenTextField" destination="Oma-6W-FcO" id="xAz-V4-T71"/>
+                        <outlet property="RedTextField" destination="KOa-0c-4Rw" id="CG9-Fl-mhe"/>
                         <outlet property="blueCountLabel" destination="qPM-gR-LR5" id="gFB-Rg-NSf"/>
                         <outlet property="blueSlider" destination="wEf-16-8tM" id="WMZ-xG-0KL"/>
                         <outlet property="colorView" destination="hmS-U5-vfd" id="oni-e8-IAu"/>
